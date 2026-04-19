@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận diện chữ viết tay - HTR</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Toolbar Toggle Button -->
+    <button class="toolbar-toggle" onclick="toggleToolbar()">
+        <span id="toolbar-icon">☰</span>
+    </button>
+
+    <!-- Toolbar -->
+    <div id="toolbar" class="toolbar">
+        <div class="toolbar-section">
+            <label>
+                <input type="radio" name="mode" value="single" checked onchange="updateMode()"> Từ đơn
+            </label>
+            <label>
+                <input type="radio" name="mode" value="multi" onchange="updateMode()"> Nhiều từ/dòng
+            </label>
+        </div>
+        
+        <div class="toolbar-section">
+            <label for="decode-mode">Decode:</label>
+            <select id="decode-mode">
+                <option value="greedy">Greedy</option>
+                <option value="beam" selected>Beam Search</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label for="beam-width">Beam Width:</label>
+            <input type="number" id="beam-width" min="1" max="20" value="5">
+        </div>
+        
+        <div class="toolbar-section">
+            <label>
+                <input type="checkbox" id="spellcheck" checked> Sửa lỗi chính tả
+            </label>
+        </div>
+
+        <div class="toolbar-section">
+            <label for="brush-size">Độ dày nét:</label>
+            <input type="range" id="brush-size" min="1" max="20" value="3">
+            <span id="brush-size-value">3px</span>
+        </div>
+
+        <div class="toolbar-section">
+            <label for="brush-color">Màu nét vẽ:</label>
+            <input type="color" id="brush-color" value="#000000">
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>✍️ Nhận diện chữ viết tay</h1>
+        
+        <!-- Canvas Card -->
+        <div class="card canvas-card">
+            <div class="card-header">
+                <h2>📝 Viết chữ tại đây</h2>
+            </div>
+            <canvas id="canvas"></canvas>
+            <div class="button-group">
+                <button onclick="clearCanvas()">🗑️ Xóa</button>
+                <button onclick="undoStroke()">↶ Undo</button>
+                <button id="eraser-btn" onclick="toggleEraser()">🧹 Tẩy</button>
+                <button onclick="predict()">🔍 Nhận diện</button>
+            </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="card results-card">
+            <div class="card-header">
+                <h2>📊 Kết quả</h2>
+            </div>
+            <div id="result">
+                <p class="status-message">Vẽ chữ và nhấn "Nhận diện" để xem kết quả</p>
+            </div>
+        </div>
+
+        <!-- Processing Steps Card -->
+        <div class="card steps-card">
+            <div class="card-header">
+                <h2>🔬 Các bước xử lý</h2>
+            </div>
+            <div id="processing-steps"></div>
+        </div>
+    </div>
+
+    <script src="/static/main.js"></script>
+</body>
+</html>
